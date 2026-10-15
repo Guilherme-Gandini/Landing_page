@@ -1,0 +1,282 @@
+/* ========== 1. Reset ========== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+/* ========== 2. Layout base ========== */
+/* A página ocupa a tela toda e empilha header + main */
+.home {
+    min-height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========== 3. Blocos ========== */
+
+/* ----- Header ----- */
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 38px;
+    z-index: 10;
+}
+
+.logo h1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.navigation ul {
+    display: flex;
+    gap: 40px;
+}
+
+.navigation a {
+    font-size: 16px;
+    transition: opacity 0.2s;
+}
+
+.navigation a:hover {
+    opacity: 0.7;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn button,
+.col1 button {
+    background-color: #0000ff;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.btn button:hover,
+.col1 button:hover {
+    filter: brightness(1.25);
+}
+
+.btn button:active,
+.col1 button:active {
+    transform: scale(0.97);
+}
+
+/* Botão hambúrguer (escondido no desktop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    background: transparent;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ----- Main ----- */
+/* O main preenche o espaço que sobra abaixo do header */
+.main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 48px;
+    padding: 24px 38px 64px;
+}
+
+.col1 {
+    flex: 2;
+}
+
+.col1 h2 {
+    font-size: 46px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.col1 p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #888;
+    margin-bottom: 32px;
+}
+
+/* ----- Cards ----- */
+/* Grid que se adapta sozinho à largura disponível */
+.cards {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card {
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.04);
+}
+
+.card1 { background-image: url(./assets/afterlife.jpg); }
+.card2 { background-image: url(./assets/transformers.jpg); }
+.card3 { background-image: url(./assets/mowgli.jpg); }
+.card4 { background-image: url(./assets/shift.png); }
+.card5 { background-image: url(./assets/squidgame.webp); }
+.card6 { background-image: url(./assets/harrypotter.jpg); }
+
+/* ========== 4. Media queries ========== */
+
+/* Tablets em paisagem */
+@media (max-width: 1100px) {
+    .header { padding: 20px 28px; }
+    .navigation ul { gap: 28px; }
+    .logo h1 { font-size: 30px; }
+
+    .main {
+        gap: 32px;
+        padding: 24px 28px 48px;
+    }
+
+    .col1 h2 { font-size: 40px; }
+    .col1 p { font-size: 16px; }
+    .cards { gap: 14px; }
+}
+
+/* Tablets retrato / celulares grandes: colunas empilham + menu hambúrguer */
+@media (max-width: 900px) {
+    .menu-toggle { display: flex; }
+
+    .navigation {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #111;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.35s ease;
+    }
+
+    .navigation.open {
+        max-height: 320px;
+        border-bottom: 1px solid #222;
+    }
+
+    .navigation ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0;
+    }
+
+    .navigation li a {
+        display: block;
+        padding: 14px 28px;
+        font-size: 18px;
+    }
+
+    .main {
+        flex-direction: column;
+        justify-content: center;
+        gap: 40px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .col { width: 100%; }
+    .col1 { flex: none; }
+    .cards { flex: none; }
+}
+
+/* Celulares: grid com 2 colunas */
+@media (max-width: 600px) {
+    .header { padding: 16px 20px; }
+    .logo h1 { font-size: 26px; }
+    .btn button { padding: 8px 20px; font-size: 15px; }
+
+    .navigation li a { padding: 14px 20px; }
+
+    .main {
+        gap: 28px;
+        padding: 16px 20px 40px;
+    }
+
+    .col1 h2 { font-size: 34px; margin-bottom: 16px; }
+    .col1 p { font-size: 15px; margin-bottom: 24px; }
+
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .card { border-radius: 10px; }
+}
+
+/* Celulares pequenos */
+@media (max-width: 380px) {
+    .logo h1 { font-size: 22px; }
+    .header-actions { gap: 8px; }
+    .col1 h2 { font-size: 28px; }
+    .col1 p { font-size: 14px; }
+    .card { aspect-ratio: 4 / 3; }
+}
